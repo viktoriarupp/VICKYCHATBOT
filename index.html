@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="de">
 <head>
   <meta charset="UTF-8" />
@@ -331,7 +331,7 @@ footer a:hover { color: var(--gold-light); }
       <div class="lead-card" id="holen">
         <h3>VICKY kostenlos freischalten</h3>
         <p style="color:var(--muted);margin-top:0">Trag dich ein und du bekommst den Zugang direkt per E-Mail.</p>
-        <form data-lead-form data-endpoint="https://app.kit.com/forms/f724505fed/subscriptions">
+        <form data-lead-form data-endpoint="https://api.convertkit.com/v3/forms/f724505fed/subscribe">
           <input type="hidden" name="quelle" value="vicky-chatbot-leadmagnet" />
           <div class="form-row">
             <label class="form-label" for="c-name">Vorname</label>
@@ -473,11 +473,10 @@ footer a:hover { color: var(--gold-light); }
         return;
       }
 
-      var kitData = new FormData();
-      kitData.append("email_address", email);
       var vorname = (form.querySelector('input[name="vorname"]') || {}).value || "";
-      if (vorname.trim()) kitData.append("fields[first_name]", vorname.trim());
-      fetch(endpoint, { method: "POST", body: kitData, mode: "no-cors" })
+      var kitData = { api_key: "y-9eucLgdfv0xxBRK0aNsg", email_address: email };
+      if (vorname.trim()) kitData.first_name = vorname.trim();
+      fetch(endpoint, { method: "POST", body: JSON.stringify(kitData), headers: { "Content-Type": "application/json" } })
         .then(function () { succeed(); })
         .catch(function () {
           setStatus("Etwas ist schiefgelaufen. Bitte versuch es noch einmal.", "error");
