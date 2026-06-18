@@ -480,8 +480,8 @@ footer a:hover { color: var(--gold-light); }
       if (vorname.trim()) params.append("first_name", vorname.trim());
       fetch(endpoint, { method: "POST", body: params })
         .then(function () { succeed(); })
-        .catch(function () {
-          setStatus("Etwas ist schiefgelaufen. Bitte versuch es noch einmal.", "error");
+        .catch(function (err) {
+          setStatus("Fehler: " + (err && err.message ? err.message : "unbekannt"), "error");
           if (btn) { btn.disabled = false; btn.textContent = btn.dataset.label || "Absenden"; }
         });
     });
